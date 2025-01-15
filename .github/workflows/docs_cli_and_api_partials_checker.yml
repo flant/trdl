@@ -24,6 +24,11 @@ jobs:
           go-version: 1.18
         id: go
 
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Prepare environment
         run: ./e2e/scripts/ci/git.sh
 
