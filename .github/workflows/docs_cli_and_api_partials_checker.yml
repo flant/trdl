@@ -22,16 +22,14 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 1.18
-        id: go
+
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prepare environment
         run: ./e2e/scripts/ci/git.sh
 
       - name: Regen partials
-        working-directory: docs
-        run: make
-
-      - name: Check
-        run: |
-          git add -A
-          git diff --exit-code HEAD -- || { echo -e "CLI or API partials are outdated!\nRegen it with 'make -C docs' and then commit changes."; exit 1; }
+        run: task doc:gen
